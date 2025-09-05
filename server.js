@@ -8,7 +8,7 @@ const MongoStore = require("connect-mongo");
 const path = require("path");
 
 // Models (needed for /profile render)
-const User = require("./models/User");
+const User = require("./models/user.js");
 
 // Routes
 const authRoutes = require("./routes/authRoutes.js");

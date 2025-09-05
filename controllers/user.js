@@ -1,5 +1,5 @@
-const User = require("../models/User");
-const Post = require("../models/Post");
+const User = require("../models/user.js");
+const Post = require("../models/post.js");
 
 // Show logged-in user profile
 exports.getProfile = async (req, res) => {

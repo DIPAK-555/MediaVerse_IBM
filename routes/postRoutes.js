@@ -4,9 +4,9 @@ const fs = require("fs");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
-const Post = require("../models/Post");
-const User = require("../models/User");
-const Comment = require("../models/comments");
+const Post = require("../models/post.js");
+const User = require("../models/user.js");
+const Comment = require("../models/comments.js");
 
 const router = express.Router();
 

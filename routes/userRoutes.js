@@ -1,6 +1,6 @@
 const express = require("express");
-const User = require("../models/User");
-const Post = require("../models/Post");
+const User = require("../models/user.js");
+const Post = require("../models/post.js");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
