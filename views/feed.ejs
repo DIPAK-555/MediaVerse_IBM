@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feed | Media Verse</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/feed.css" />
+  </head>
+  <body class="theme-dark">
+    <!-- TOP NAV -->
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <a class="brand" href="/feed">
+          <i class="fa-solid fa-play"></i>
+          <span>MEDIA VERSE</span>
+        </a>
+
+        <!-- Search with results dropdown -->
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search people, posts, or communities..."
+          />
+          <div id="searchResults" class="search-results"></div>
+        </div>
+      </div>
+
+      <nav class="topbar__right">
+        <button id="createBtn" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i> Create
+        </button>
+        <a class="icon" title="Messages"
+          ><i class="fa-regular fa-comment"></i
+        ></a>
+        <a class="icon" title="Notifications"
+          ><i class="fa-regular fa-bell"></i
+        ></a>
+
+        <!-- Avatar + dropdown -->
+        <div class="avatar-wrap" id="avatarWrap">
+          <img
+            src="<%= user?.profilePicture || '/uploads/images/default-profile.png' %>"
+            alt="Me"
+            class="avatar"
+            id="profileAvatar"
+          />
+          <div class="dropdown" id="avatarDropdown">
+            <a href="/profile"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="/settings"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="/auth/logout"
+              ><i class="fa-solid fa-right-from-bracket"></i> Sign out</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- LAYOUT -->
+    <div class="layout">
+      <!-- LEFT SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <ul class="navlist">
+          <li>
+            <a href="/feed" class="active"
+              ><i class="fa-solid fa-house"></i><span>Home</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-users"></i><span>Communities</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-solid fa-message"></i><span>Messages</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-regular fa-bell"></i><span>Notifications</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa-regular fa-bookmark"></i><span>Saved</span></a
+            >
+          </li>
+        </ul>
+
+        <div class="discover">
+          <h4>Discover</h4>
+          <div class="chips">
+            <a class="chip">#uiux</a><a class="chip">#mern</a
+            ><a class="chip">#blockchain</a> <a class="chip">#jobs</a
+            ><a class="chip">#research</a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CENTER: FEED -->
+      <main class="main">
+        <!-- Composer -->
+        <section class="composer card" id="composer">
+          <img
+            src="<%= user?.profilePicture || '/uploads/images/default-profile.png' %>"
+            class="avatar-sm"
+            alt="me"
+          />
+          <form id="postForm" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="" />
+            <input
+              class="composer__input"
+              name="content"
+              placeholder="Share something with your professional community..."
+            />
+            <div class="composer__row">
+              <label class="chip file">
+                <i class="fa-regular fa-image"></i> Image
+                <input type="file" name="images" accept="image/*" multiple />
+              </label>
+              <label class="chip file">
+                <i class="fa-regular fa-circle-play"></i> Video
+                <input type="file" name="videos" accept="video/*" multiple />
+              </label>
+              <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Feed list -->
+        <section class="feed" id="feedList">
+          <% (posts || []).forEach(function(post){ %>
+          <article class="post card" id="post-<%= post._id %>">
+            <header class="post__header">
+              <div class="userline">
+                <img
+                  class="avatar-sm"
+                  src="<%= post.user?.profilePicture || '/uploads/images/default-profile.png' %>"
+                  alt="avatar"
+                />
+                <div>
+                  <div class="author"><%= post.user?.name || 'User' %></div>
+                  <div class="meta">
+                    <%= new Date(post.createdAt).toLocaleString() %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="menu-wrap">
+                <button class="icon three" data-post="<%= post._id %>">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+                <div class="menu">
+                  <% if (String(post.user?._id) === String(user?._id)) { %>
+                  <button
+                    class="menu__item delete-post"
+                    data-id="<%= post._id %>"
+                  >
+                    <i class="fa-solid fa-trash"></i> Delete
+                  </button>
+                  <% } %>
+                </div>
+              </div>
+            </header>
+
+            <% if (post.content?.trim()) { %>
+            <p class="post__text"><%= post.content %></p>
+            <% } %> <% if (post.images?.length) { %>
+            <div class="media-grid">
+              <% post.images.forEach(function(img){ %>
+              <img src="<%= img %>" alt="post image" />
+              <% }) %>
+            </div>
+            <% } %> <% if (post.videos?.length) { %>
+            <div class="media-col">
+              <% post.videos.forEach(function(v){ %>
+              <video src="<%= v %>" controls></video>
+              <% }) %>
+            </div>
+            <% } %>
+
+            <footer class="actions">
+              <button
+                class="act like-btn <%= (post.likes||[]).includes(String(user?._id)) ? 'active' : '' %>"
+                data-id="<%= post._id %>"
+              >
+                <i class="fa-regular fa-heart"></i>
+                <span class="like-count"><%= (post.likes||[]).length %></span>
+              </button>
+              <button class="act comment-toggle" data-id="<%= post._id %>">
+                <i class="fa-regular fa-comment"></i>
+                <span class="comment-count"
+                  ><%= (post.comments||[]).length %></span
+                >
+              </button>
+              <button class="act share-btn" data-id="<%= post._id %>">
+                <i class="fa-solid fa-share"></i>
+                <span class="share-count"><%= (post.shares||[]).length %></span>
+              </button>
+            </footer>
+
+            <!-- Comments -->
+            <section class="comments" id="comments-<%= post._id %>" hidden>
+              <div class="comments__list">
+                <% (post.comments || []).forEach(function(c){ %>
+                <div class="comment">
+                  <img
+                    class="avatar-xs"
+                    src="<%= c.user?.profilePicture || '/uploads/images/default-profile.png' %>"
+                  />
+                  <div class="comment__bubble">
+                    <strong><%= c.user?.name || 'User' %></strong>
+                    <span><%= c.content %></span>
+                  </div>
+                </div>
+                <% }) %>
+              </div>
+              <form class="comment-form" data-id="<%= post._id %>">
+                <input type="text" placeholder="Write a comment..." required />
+                <button type="submit" class="btn btn-ghost">Post</button>
+              </form>
+            </section>
+          </article>
+          <% }) %>
+        </section>
+      </main>
+
+      <!-- RIGHT SIDEBAR -->
+      <aside class="rightbar">
+        <div class="card rightcard">
+          <div class="rc-title">Communities</div>
+          <div class="rc-muted">
+            Role-based access. Clean APIs. Moderation tools.
+          </div>
+        </div>
+
+        <div class="card rightcard">
+          <div class="rc-title">Trending</div>
+          <div class="chips">
+            <a class="chip">#ai</a><a class="chip">#react</a
+            ><a class="chip">#uiux</a> <a class="chip">#flutter</a
+            ><a class="chip">#research</a><a class="chip">#jobs</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ========================= -->
+    <!-- Toast Notification -->
+    <!-- ========================= -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ========================= -->
+    <!-- Profile Modal -->
+    <!-- ========================= -->
+    <div id="profileModal" class="modal" hidden>
+      <div class="modal-content">
+        <span id="closeModal" class="close-btn">&times;</span>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <script>
+      // expose current user id for client checks (owner -> delete)
+      window.CURRENT_USER_ID = "<%= user?._id || '' %>";
+    </script>
+
+    <!-- Image Preview Modal -->
+    <div id="imageModal" hidden>
+      <span class="close">&times;</span>
+      <img class="modal-content" id="modalImg" />
+    </div>
+
+    <script src="/js/feed.js"></script>
+  </body>
+</html>

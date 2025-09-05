@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <!-- Background Effects -->
+      <div class="bg-effect bg-effect-1"></div>
+      <div class="bg-effect bg-effect-2"></div>
+
+      <!-- Back Button -->
+      <a href="/" class="back-button">
+        <span class="back-icon">←</span>
+        Back to Home
+      </a>
+
+      <!-- Login Card -->
+      <div class="login-card <%= mounted ? 'mounted' : '' %>">
+        <div class="login-header">
+          <h1 class="login-title">Welcome Back</h1>
+          <p class="login-subtitle">Please log in to continue</p>
+        </div>
+
+        <form action="/auth/login" method="POST" class="login-form" novalidate>
+          <!-- Email -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value="<%= formData ? formData.email : '' %>"
+                class="form-input <%= errors && errors.email ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.email) { %>
+            <p class="error-message"><%= errors.email %></p>
+            <% } %>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value="<%= formData ? formData.password : '' %>"
+                class="form-input <%= errors && errors.password ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.password) { %>
+            <p class="error-message"><%= errors.password %></p>
+            <% } %>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="submit-button">Log In</button>
+        </form>
+
+        <p class="signup-link-text">
+          Don't have an account?
+          <a href="/signup" class="signup-link">Sign Up</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

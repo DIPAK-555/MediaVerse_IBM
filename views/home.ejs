@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MediaVerse</title>
+
+    <link rel="stylesheet" href="/css/home.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="home-container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <h2 class="logo">MediaVerse</h2>
+          <div class="header-buttons">
+            <button onclick="navigate('/login')" class="btn-login">
+              Login
+            </button>
+            <button onclick="navigate('/signup')" class="btn-signup">
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-bg">
+          <div class="bg-blur bg-blur-1"></div>
+          <div class="bg-blur bg-blur-2"></div>
+        </div>
+
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Where
+            <span class="gradient-purple"> Creator </span>
+            Meets
+            <span class="gradient-blue"> Creativity</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            The social platform that bridges your professional network with your
+            creative passions. Share insights, showcase projects, and connect
+            with like-minded individuals.
+          </p>
+
+          <div class="cta-section">
+            <button onclick="navigate('/login')" class="cta-button">
+              Get Started Free
+              <i data-lucide="arrow-right" class="cta-icon"></i>
+            </button>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon purple-bg">
+                <i data-lucide="briefcase" class="feature-icon-svg"></i>
+              </div>
+              <p class="feature-text">Professional Network</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon blue-bg">
+                <i data-lucide="camera" class="feature-icon-svg"></i>
+              </div>
+              <p class="feature-text">Creative Showcase</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon green-bg">
+                <i data-lucide="users" class="feature-icon-svg"></i>
+              </div>
+              <p class="feature-text">Communities</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <div class="brand-header">
+                <i data-lucide="message-circle" class="brand-icon"></i>
+                <span class="brand-name">MediaVerse</span>
+              </div>
+              <p class="brand-description">
+                The perfect blend of professional networking and creative
+                expression. Connect, create, and grow with like-minded
+                individuals.
+              </p>
+
+              <!-- Static social links -->
+              <div class="social-links">
+                <a
+                  href="https://twitter.com"
+                  aria-label="Twitter"
+                  class="social-link"
+                >
+                  <i data-lucide="twitter" class="social-icon"></i>
+                </a>
+                <a
+                  href="https://facebook.com"
+                  aria-label="Facebook"
+                  class="social-link"
+                >
+                  <i data-lucide="facebook" class="social-icon"></i>
+                </a>
+                <a
+                  href="https://instagram.com"
+                  aria-label="Instagram"
+                  class="social-link"
+                >
+                  <i data-lucide="instagram" class="social-icon"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Static footer sections -->
+            <div class="footer-section">
+              <h3 class="footer-section-title">Company</h3>
+              <ul class="footer-links">
+                <li><a href="/about" class="footer-link">About</a></li>
+                <li><a href="/careers" class="footer-link">Careers</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-section-title">Support</h3>
+              <ul class="footer-links">
+                <li><a href="/help" class="footer-link">Help Center</a></li>
+                <li><a href="/contact" class="footer-link">Contact Us</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-section-title">Legal</h3>
+              <ul class="footer-links">
+                <li>
+                  <a href="/privacy" class="footer-link">Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="/terms" class="footer-link">Terms of Service</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p class="footer-copyright">
+              © 2025 MediaVerse. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      function navigate(path) {
+        window.location.href = path;
+      }
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

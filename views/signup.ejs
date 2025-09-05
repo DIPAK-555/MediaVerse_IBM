@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Signup</title>
+    <link rel="stylesheet" href="/css/signup.css" />
+  </head>
+  <body>
+    <div class="signup-container">
+      <!-- Background Effects -->
+      <div class="bg-effect bg-effect-1"></div>
+      <div class="bg-effect bg-effect-2"></div>
+
+      <!-- Back Button -->
+      <a href="/" class="back-button">
+        <span class="back-icon">←</span>
+        Back to Home
+      </a>
+
+      <!-- Signup Card -->
+      <div class="signup-card <%= mounted ? 'mounted' : '' %>">
+        <div class="signup-header">
+          <h1 class="signup-title">Join MediaVerse</h1>
+          <p class="signup-subtitle">
+            Create your account and start your journey
+          </p>
+        </div>
+
+        <form
+          action="/auth/signup"
+          method="POST"
+          class="signup-form"
+          novalidate
+        >
+          <!-- Username -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value="<%= formData ? formData.username : '' %>"
+                class="form-input <%= errors && errors.username ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.username) { %>
+            <p class="error-message"><%= errors.username %></p>
+            <% } %>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value="<%= formData ? formData.email : '' %>"
+                class="form-input <%= errors && errors.email ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.email) { %>
+            <p class="error-message"><%= errors.email %></p>
+            <% } %>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value="<%= formData ? formData.password : '' %>"
+                class="form-input <%= errors && errors.password ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.password) { %>
+            <p class="error-message"><%= errors.password %></p>
+            <% } %>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="password"
+                name="repassword"
+                placeholder="Confirm Password"
+                value="<%= formData ? formData.repassword : '' %>"
+                class="form-input <%= errors && errors.repassword ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.repassword) { %>
+            <p class="error-message"><%= errors.repassword %></p>
+            <% } %>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <div class="input-wrapper">
+              <span class="input-icon"></span>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                value="<%= formData ? formData.phone : '' %>"
+                class="form-input <%= errors && errors.phone ? 'error' : '' %>"
+                required
+              />
+            </div>
+            <% if (errors && errors.phone) { %>
+            <p class="error-message"><%= errors.phone %></p>
+            <% } %>
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div class="form-group">
+            <div class="checkbox-wrapper">
+              <input type="checkbox" name="terms" id="terms" <%= formData &&
+              formData.terms ? 'checked' : '' %> class="checkbox-input" required
+              />
+              <label for="terms" class="checkbox-label">
+                I agree to the
+                <a href="#" class="terms-link">Terms and Conditions</a>
+              </label>
+            </div>
+            <% if (errors && errors.terms) { %>
+            <p class="error-message"><%= errors.terms %></p>
+            <% } %>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="submit-button">Sign Up</button>
+        </form>
+
+        <p class="login-link-text">
+          Already have an account?
+          <a href="/login" class="login-link">Log In</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

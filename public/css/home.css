@@ -1,0 +1,410 @@
+/* ===== GLOBAL RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- CHANGE 1: REMOVED RIGID HEIGHT --- */
+/* Removed `height: 100%` to allow content to define page height */
+html,
+body {
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #0f0f1f;
+  color: #fff;
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+/* --- CHANGE 2: SETUP THE MAIN LAYOUT CONTAINER --- */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures container is at least as tall as the screen */
+}
+
+/* ===== HEADER ===== */
+.header {
+  width: 100%;
+  padding: 16px 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(15, 15, 31, 0.9);
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+}
+
+.header-content {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-login,
+.btn-signup {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-login {
+  border: 1px solid #9333ea;
+  background: transparent;
+  color: #fff;
+}
+.btn-login:hover {
+  background: #9333ea;
+  transform: translateY(-2px);
+}
+
+.btn-signup {
+  background: #9333ea;
+  border: none;
+  font-weight: 600;
+  color: #fff;
+}
+.btn-signup:hover {
+  background: #7e22ce;
+  transform: translateY(-2px);
+}
+
+/* ===== HERO (FIXED) ===== */
+.hero {
+  position: relative;
+  display: flex; /* Using flex to center its own content */
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 160px 20px 80px;
+
+  /* --- CHANGE 3: THE KEY FIX --- */
+  flex-grow: 1; /* This makes the hero section expand to fill available space */
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(76, 29, 149, 0.2),
+    transparent,
+    rgba(30, 64, 175, 0.2)
+  );
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 32px;
+  line-height: 1.2;
+}
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 4rem;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 5rem;
+  }
+}
+
+.gradient-purple {
+  background: linear-gradient(to right, #c084fc, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-blue {
+  background: linear-gradient(to right, #60a5fa, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  max-width: 800px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+}
+
+.cta-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #9333ea;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 16px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.cta-button:hover {
+  background: #7e22ce;
+  transform: scale(1.05);
+}
+.cta-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+.cta-button:hover .cta-icon {
+  transform: translateX(4px);
+}
+
+/* ===== FEATURES ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.feature-card {
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.feature-card:hover {
+  transform: scale(1.1);
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  border: 1px solid;
+}
+.purple-bg {
+  background: rgba(147, 51, 234, 0.1);
+  border-color: rgba(147, 51, 234, 0.2);
+}
+.blue-bg {
+  background: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+.green-bg {
+  background: rgba(22, 163, 74, 0.1);
+  border-color: rgba(22, 163, 74, 0.2);
+}
+
+.feature-text {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: #111827;
+  border-top: 1px solid #1f2937;
+  color: #d1d5db;
+  width: 100%;
+  /* --- CHANGE 4: REMOVED REDUNDANT MARGIN --- */
+  /* margin-top: auto; No longer needed */
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.footer-brand {
+  grid-column: span 2;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  color: #9333ea;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.brand-description {
+  color: #9ca3af;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  background: #1f2937;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  transition: all 0.3s ease;
+}
+.social-link:hover {
+  background: #9333ea;
+  color: #fff;
+}
+
+.footer-section-title {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-link {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-link:hover {
+  color: #c084fc;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: 1px solid #1f2937;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .footer-bottom {
+    flex-direction: row;
+  }
+}
+
+.footer-copyright {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Fluid type for hero */
+.hero-title {
+  font-size: clamp(2rem, 4.5vw + 1rem, 5rem);
+  line-height: 1.15;
+}
+.hero-subtitle {
+  font-size: clamp(1rem, 1.2vw + 0.8rem, 1.25rem);
+}
+
+/* Contain page with safe areas on mobile */
+.header {
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+}
+.hero {
+  padding: clamp(120px, 18vh, 200px) 20px 64px;
+}
+.footer-content {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Features grid stages to avoid awkward 2.5 columns */
+@media (min-width: 640px) and (max-width: 767.98px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .cta-button {
+    width: 100%;
+    justify-content: center;
+  }
+  .feature-card {
+    padding: 6px;
+  }
+}

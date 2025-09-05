@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Error <%= statusCode %></title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f0f1f;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        margin: 0;
+      }
+      h1 {
+        color: #ff4d4d;
+        font-size: 2.5rem;
+      }
+      p {
+        margin-top: 10px;
+        font-size: 18px;
+        text-align: center;
+        max-width: 600px;
+      }
+      a {
+        margin-top: 20px;
+        color: #4da6ff;
+        text-decoration: none;
+        border: 1px solid #4da6ff;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      a:hover {
+        background: #4da6ff;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Error <%= statusCode %></h1>
+    <p><%= message %></p>
+    <a href="/">Back to Home</a>
+  </body>
+</html>

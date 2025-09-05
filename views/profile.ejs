@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      <%= (user && user.name) ? user.name : "Profile" %> | Media Verse
+    </title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/profile.css" />
+    <style>
+      .icon-btn {
+        background: none;
+        border: none;
+        color: #aaa;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+      .icon-btn:hover {
+        color: #fff;
+      }
+      .post__footer {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: #555;
+      }
+      .action-btn:hover {
+        color: #000;
+      }
+      .comments-section {
+        margin-top: 10px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+      .comment-form {
+        display: flex;
+        gap: 5px;
+        margin-top: 8px;
+      }
+      .comment-form input {
+        flex: 1;
+        padding: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar__inner container">
+        <a href="/" class="brand">
+          <i class="fa-solid fa-play"></i>
+          <span>MEDIA VERSE</span>
+        </a>
+
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search people, posts…" />
+        </div>
+
+        <nav class="actions">
+          <a href="javascript:void(0)" id="openCreate" class="btn btn--primary">
+            <i class="fa-solid fa-plus"></i><span>Create</span>
+          </a>
+
+         <a class="icon" href="/feed"><i class="fa-solid fa-house"></i></a>
+
+          <a class="icon"><i class="fa-solid fa-users"></i></a>
+          <a class="icon"><i class="fa-solid fa-comment"></i></a>
+          <a class="icon"><i class="fa-solid fa-bell"></i></a>
+
+          <div class="avatar-menu">
+            <img
+              src="<%= (user && user.profilePicture) ? user.profilePicture : '/uploads/images/default-profile.png' %>"
+              alt="avatar"
+              class="avatar-img"
+            />
+            <div class="dropdown">
+              <a href="/profile"><i class="fa-solid fa-user"></i> Profile</a>
+              <a href="/settings"><i class="fa-solid fa-gear"></i> Settings</a>
+              <a href="/auth/logout"
+                ><i class="fa-solid fa-right-from-bracket"></i> Sign out</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="container page">
+      <!-- PROFILE CARD -->
+      <section class="card profile-card">
+        <div class="profile-card__left">
+          <div class="profile-photo">
+            <img
+              src="<%= (user && user.profilePicture) ? user.profilePicture : '/uploads/images/default-profile.png' %>"
+              alt="Profile photo"
+              id="profilePhotoPreview"
+            />
+            <form
+              action="/users/update"
+              method="POST"
+              enctype="multipart/form-data"
+              class="photo-upload"
+            >
+              <label class="photo-upload__btn" title="Change photo">
+                <i class="fa-solid fa-camera"></i>
+                <input
+                  type="file"
+                  name="profilePicture"
+                  accept="image/*"
+                  onchange="this.form.submit()"
+                />
+              </label>
+            </form>
+          </div>
+        </div>
+
+        <div class="profile-card__right">
+          <!-- Header with Edit button -->
+          <div class="profile-header">
+            <h1 class="name">
+              <%= (user && user.name) ? user.name : 'User' %>
+            </h1>
+            <button id="editProfileBtn" class="icon-btn" title="Edit profile">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+
+          <!-- Bio text -->
+          <p class="bio">
+            <%= (user && user.bio && user.bio.trim()) ? user.bio : 'No bio yet'
+            %>
+          </p>
+
+          <!-- Edit Profile (hidden by default) -->
+          <form
+            action="/users/update"
+            method="POST"
+            enctype="multipart/form-data"
+            class="edit-form"
+            style="display: none"
+            id="editForm"
+          >
+            <div class="grid">
+              <div class="field">
+                <label>Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value="<%= (user && user.name) ? user.name : '' %>"
+                  placeholder="Your name"
+                />
+              </div>
+              <div class="field">
+                <label>Bio</label>
+                <textarea
+                  name="bio"
+                  rows="2"
+                  placeholder="Say something about you…"
+                >
+<%= (user && user.bio) ? user.bio : '' %></textarea
+                >
+              </div>
+            </div>
+
+            <div class="edit-actions">
+              <button type="submit" class="btn btn--primary">
+                <i class="fa-solid fa-floppy-disk"></i> Save
+              </button>
+              <button type="button" id="cancelEdit" class="btn btn--secondary">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- CREATE POST MODAL -->
+      <section
+        class="card create-post"
+        id="createPostModal"
+        style="display: none"
+      >
+        <form
+          action="/posts/create"
+          method="POST"
+          enctype="multipart/form-data"
+          class="post-form"
+          id="postForm"
+        >
+          <textarea
+            name="content"
+            rows="3"
+            placeholder="What's on your mind?"
+          ></textarea>
+
+          <div class="uploader-row">
+            <label class="file-chip">
+              <i class="fa-regular fa-image"></i> Images
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                multiple
+                id="imageInput"
+              />
+            </label>
+            <label class="file-chip">
+              <i class="fa-regular fa-circle-play"></i> Videos
+              <input
+                type="file"
+                name="videos"
+                accept="video/*"
+                multiple
+                id="videoInput"
+              />
+            </label>
+
+            <button type="submit" class="btn btn--primary post-btn">
+              <i class="fa-solid fa-paper-plane"></i> Post
+            </button>
+          </div>
+        </form>
+       <button id="closeCreate" class="btn btn--secondary" 
+  style="display:block; width:100%; text-align:center;">
+  Cancel
+</button>
+
+      </section>
+
+      <!-- FEED -->
+      <section class="feed">
+        <% if (posts && posts.length) { %> <% posts.forEach(function(post){ %>
+        <article class="card post" id="post-<%= post._id %>">
+          <header class="post__header">
+            <div class="post__user">
+              <img
+                src="<%= (post.user && post.user.profilePicture) ? post.user.profilePicture : '/uploads/images/default-profile.png' %>"
+                alt="avatar"
+                class="avatar-sm"
+              />
+              <div>
+                <div class="author">
+                  <%= (post.user && post.user.name) ? post.user.name : 'Unknown'
+                  %>
+                </div>
+                <div class="time">
+                  <%= post.createdAt ? new Date(post.createdAt).toDateString() :
+                  '' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="post__actions">
+              <button
+                class="icon three-dots"
+                data-menu-for="<%= post._id %>"
+                aria-label="More"
+              >
+                <i class="fa-solid fa-ellipsis"></i>
+              </button>
+              <div class="menu" id="menu-<%= post._id %>">
+                <button
+                  class="menu__item delete-post"
+                  data-id="<%= post._id %>"
+                >
+                  <i class="fa-solid fa-trash"></i> Delete
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <% if (post.content && post.content.trim()) { %>
+          <p class="post__text"><%= post.content %></p>
+          <% } %> <% if (post.images && post.images.length) { %>
+          <div class="post__media-grid">
+            <% post.images.forEach(function(img){ %>
+            <img src="<%= img %>" alt="post image" />
+            <% }) %>
+          </div>
+          <% } %> <% if (post.videos && post.videos.length) { %>
+          <div class="post__media-col">
+            <% post.videos.forEach(function(v){ %>
+            <video src="<%= v %>" controls></video>
+            <% }) %>
+          </div>
+          <% } %>
+
+          <!-- Post Footer -->
+          <div class="post__footer">
+            <button class="action-btn like-btn" data-id="<%= post._id %>">
+              <i class="fa-regular fa-heart"></i>
+              <span class="like-count"
+                ><%= post.likes ? post.likes.length : 0 %></span
+              >
+            </button>
+            <button class="action-btn comment-btn" data-id="<%= post._id %>">
+              <i class="fa-regular fa-comment"></i>
+              <span class="comment-count"
+                ><%= post.comments ? post.comments.length : 0 %></span
+              >
+            </button>
+            <button class="action-btn share-btn" data-id="<%= post._id %>">
+              <i class="fa-solid fa-share"></i>
+              <span class="share-count"
+                ><%= post.shares ? post.shares.length : 0 %></span
+              >
+            </button>
+          </div>
+
+         <!-- Comments Section -->
+<div
+  class="comments-section"
+  id="comments-<%= post._id %>"
+  style="display: none"
+>
+  <div class="comments-list">
+    <% if (post.comments && post.comments.length) { %>
+      <% post.comments.forEach(function(comment){ %>
+        <div class="comment">
+          <img 
+            src="<%= (comment.user && comment.user.profilePicture) 
+              ? comment.user.profilePicture 
+              : '/uploads/images/default-profile.png' %>" 
+            class="avatar-xs" 
+          />
+          <span>
+            <strong><%= comment.user ? comment.user.name : 'User' %>:</strong> 
+            <%= comment.content %>
+          </span>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+  <form class="comment-form" data-id="<%= post._id %>">
+    <input type="text" placeholder="Write a comment..." required />
+    <button type="submit">Post</button>
+  </form>
+</div>
+
+          </div>
+        </article>
+        <% }) %> <% } else { %>
+        <p class="empty">No posts yet.</p>
+        <% } %>
+      </section>
+    </main>
+
+    <!-- SCRIPT -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const token = "<%= user ? user._id : '' %>"; // for auth if needed
+
+        // --- Edit Profile Toggle ---
+        const editBtn = document.getElementById("editProfileBtn");
+        const editForm = document.getElementById("editForm");
+        const cancelBtn = document.getElementById("cancelEdit");
+        const bio = document.querySelector(".bio");
+
+        if (editBtn && editForm && cancelBtn) {
+          editBtn.addEventListener("click", () => {
+            editForm.style.display = "block";
+            bio.style.display = "none";
+            editBtn.style.display = "none";
+          });
+
+          cancelBtn.addEventListener("click", () => {
+            editForm.style.display = "none";
+            bio.style.display = "block";
+            editBtn.style.display = "inline-block";
+          });
+        }
+
+        // Toggle comments
+       // Toggle comments
+document.querySelectorAll(".comment-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const postId = btn.dataset.id;
+    const section = document.getElementById("comments-" + postId);
+    if (!section) return;
+
+    if (section.style.display === "none" || section.style.display === "") {
+      section.style.display = "block";
+    } else {
+      section.style.display = "none";
+    }
+  });
+});
+
+
+        // Like button
+        document.querySelectorAll(".like-btn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const postId = btn.dataset.id;
+            const res = await fetch(`/posts/${postId}/like`, {
+              method: "POST",
+            });
+            const data = await res.json();
+            btn.querySelector(".like-count").textContent = data.likes;
+          });
+        });
+
+        // Share button
+        document.querySelectorAll(".share-btn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const postId = btn.dataset.id;
+            const res = await fetch(`/posts/${postId}/share`, {
+              method: "POST",
+            });
+            const data = await res.json();
+            btn.querySelector(".share-count").textContent = data.shares;
+          });
+        });
+
+        // Comment form
+        document.querySelectorAll(".comment-form").forEach((form) => {
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const postId = form.dataset.id;
+            const input = form.querySelector("input");
+            const content = input.value.trim();
+            if (!content) return;
+            const res = await fetch(`/posts/${postId}/comment`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ content }),
+            });
+            const data = await res.json();
+            const list = form.parentElement.querySelector(".comments-list");
+const div = document.createElement("div");
+div.classList.add("comment");
+div.innerHTML = `
+  <img src="${data.user.profilePicture || '/uploads/images/default-profile.png'}" 
+       class="avatar-xs" />
+  <span><strong>${data.user.name}</strong>: ${data.content}</span>
+`;
+list.appendChild(div);
+
+            input.value = "";
+          });
+        });
+      });
+
+
+
+      
+    </script>
+    <script src="/js/profile.js"></script>
+  </body>
+</html>

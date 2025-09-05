@@ -1,0 +1,957 @@
+/* ==========================================================================
+   Media Verse — Feed.css (full)
+   ========================================================================== */
+
+:root {
+  --bg: #0b0e14;
+  --panel: #0f1320;
+  --panel-2: #11162a;
+  --border: #1a2140;
+  --text: #e6e8ee;
+  --muted: #9aa3b2;
+  --brand: #7c4dff;
+  --brand-2: #5b2eff;
+  --chip: #1b213b;
+  --danger: #ff5370;
+  --ok: #22c55e;
+
+  --elev-1: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --elev-2: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+/* Reset / Base */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body.theme-dark {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 ui-sans-serif, system-ui, Segoe UI, Roboto, Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+[hidden] {
+  display: none !important;
+}
+
+.card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: var(--elev-1);
+}
+
+/* TOPBAR */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0; /* ensure sticks to left */
+  width: 100%; /* full width across screen */
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 14, 20, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hamburger {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+.brand {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.brand i {
+  color: var(--brand);
+}
+
+/* Search box (topbar) */
+.search {
+  position: relative; /* anchor for dropdown */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0b0f1e;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: 10px;
+  min-width: 360px;
+}
+.search input {
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  width: 100%;
+  outline: none;
+}
+.search:focus-within {
+  border-color: #27306a;
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.15);
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.icon {
+  color: var(--muted);
+}
+.icon:hover {
+  color: var(--text);
+}
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.btn-primary {
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  color: #fff;
+}
+.btn-ghost {
+  background: #111a36;
+  color: var(--text);
+}
+.btn-sm {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* AVATAR + DROPDOWN */
+.avatar-wrap {
+  position: relative;
+}
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+}
+.avatar-lg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 180px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1200;
+}
+.dropdown a {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.dropdown a:last-child {
+  border-bottom: 0;
+}
+.avatar-wrap.open .dropdown {
+  display: flex;
+}
+
+/* LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 260px minmax(640px, 1fr) 330px;
+  gap: 18px;
+  max-width: 1280px;
+  margin: 18px auto;
+  padding: 0 16px;
+}
+.sidebar {
+  position: sticky;
+  top: 72px;
+  height: calc(100dvh - 90px);
+}
+.sidebar .navlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar .navlist a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  color: var(--muted);
+  border: 1px solid transparent;
+}
+.sidebar .navlist a:hover {
+  background: #0e1430;
+  border-color: var(--border);
+  color: var(--text);
+}
+.sidebar .navlist a.active {
+  background: #0e1430;
+  border-color: var(--border);
+  color: #fff;
+}
+.sidebar .navlist i {
+  width: 22px;
+  text-align: center;
+}
+.sidebar .discover {
+  margin-top: 16px;
+}
+.sidebar h4 {
+  margin: 0 0 8px 2px;
+  color: var(--muted);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  background: var(--chip);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #c9d0df;
+  font-size: 12px;
+}
+.chip.file input {
+  display: none;
+}
+
+/* COLLAPSE */
+.sidebar.collapsed {
+  width: 72px;
+}
+.sidebar.collapsed .navlist a span,
+.sidebar.collapsed .discover {
+  display: none;
+}
+.layout.collapsed {
+  grid-template-columns: 72px minmax(640px, 1fr) 330px;
+}
+
+/* CENTER */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.composer {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.avatar-sm {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+}
+.composer form {
+  flex: 1;
+}
+.composer__input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0b0f1e;
+  color: var(--text);
+}
+.composer__input:focus {
+  outline: none;
+  border-color: #2a3576;
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.12);
+}
+.composer__row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* POST */
+.post__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.userline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.author {
+  font-weight: 600;
+}
+.meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+.menu-wrap {
+  position: relative;
+}
+.menu-wrap .menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 26px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.menu-wrap.open .menu {
+  display: block;
+}
+.menu__item {
+  display: block;
+  background: none;
+  border: 0;
+  color: #fff;
+  text-align: left;
+  padding: 10px 12px;
+  width: 160px;
+  cursor: pointer;
+}
+.menu__item:hover {
+  background: #0e1430;
+}
+
+.post__text {
+  margin: 8px 0 10px;
+}
+.media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.media-grid img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.media-col video {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.act {
+  background: #101533;
+  border: 1px solid var(--border);
+  color: #cfd6e6;
+  padding: 7px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.act.active,
+.act:hover {
+  border-color: #2c3b78;
+}
+
+/* COMMENTS */
+.comments {
+  margin-top: 10px;
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+}
+.comment {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 6px 0;
+}
+.avatar-xs {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+.comment__bubble {
+  background: #0d1430;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  max-width: 100%;
+}
+.comment-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.comment-form input {
+  flex: 1;
+  background: #0b0f1e;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: #fff;
+  padding: 8px 10px;
+}
+.comment-form input:focus {
+  outline: none;
+  border-color: #2a3576;
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.12);
+}
+
+/* RIGHT SIDEBAR */
+.rightbar {
+  position: sticky;
+  top: 72px;
+  height: calc(100dvh - 90px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.rightcard .rc-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.rc-muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .rightbar {
+    display: none;
+  }
+  .layout {
+    grid-template-columns: 260px 1fr;
+  }
+  .layout.collapsed {
+    grid-template-columns: 72px 1fr;
+  }
+}
+@media (max-width: 860px) {
+  .search {
+    display: none;
+  }
+  .layout,
+  .layout.collapsed {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Toast notification
+   ========================================================================== */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 220px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  z-index: 2000;
+  border: 1px solid #1e293b;
+  box-shadow: var(--elev-2);
+}
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.toast.success {
+  border-left: 5px solid #22c55e;
+}
+.toast.error {
+  border-left: 5px solid #ef4444;
+}
+
+/* ==========================================================================
+   Composer Media Preview
+   ========================================================================== */
+.preview-box {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.preview-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+/* ==========================================================================
+   Search Results Dropdown
+   ========================================================================== */
+.search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-height: 340px;
+  overflow-y: auto;
+  box-shadow: var(--elev-2);
+  z-index: 1500;
+}
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.search-item:hover {
+  background: #0e1430;
+}
+.search-item img.avatar-xs {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.result-names {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.result-names .result-handle {
+  color: var(--muted);
+  font-size: 12px;
+}
+.search-empty {
+  padding: 12px;
+  color: var(--muted);
+}
+.sr-actions {
+  margin-left: auto;
+}
+
+/* Optional section headers inside dropdown */
+.search-section-title {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 8px 12px;
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   Profile Modal Popup
+   ========================================================================== */
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 3000;
+}
+.modal-content {
+  background: var(--panel);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 92%;
+  position: relative;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--elev-2);
+}
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.profile-popup .pop-title {
+  font-weight: 700;
+  margin-top: 8px;
+}
+.profile-popup .pop-sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+.profile-popup .pop-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Scrollbar polish (optional)
+   ========================================================================== */
+.search-results::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+.rightbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.search-results::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb,
+.rightbar::-webkit-scrollbar-thumb {
+  background: #1a2140;
+  border-radius: 8px;
+  border: 2px solid #0f1320;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 260px minmax(640px, 1fr) 330px;
+  gap: 18px;
+  max-width: 1280px;
+  margin: 18px auto;
+  padding: 72px 16px 0; /* add top padding equal to navbar height */
+}
+
+/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+/* ===== Core vars & sizes ===== */
+:root {
+  --nav-h: 64px;
+}
+
+/* ===== Topbar (bigger, clearer) ===== */
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 14, 20, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1200; /* above cards/menus */
+}
+
+/* make icons readable */
+.icon > i,
+.topbar i.fa-solid,
+.topbar i.fa-regular {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ===== Layout (one source of truth) ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 260px minmax(640px, 1fr) 330px;
+  gap: 18px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: calc(var(--nav-h) + 12px) 16px 24px; /* content clears fixed nav */
+}
+
+/* collapsed/sm breakpoints still work */
+.layout.collapsed {
+  grid-template-columns: 72px minmax(640px, 1fr) 330px;
+}
+@media (max-width: 1100px) {
+  .layout,
+  .layout.collapsed {
+    grid-template-columns: 260px 1fr;
+  }
+}
+@media (max-width: 860px) {
+  .layout,
+  .layout.collapsed {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Post media grid (no side gaps on single image) ===== */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* was 1fr 1fr */
+  gap: 8px;
+}
+
+/* when exactly one image, make it full width */
+.media-grid.single {
+  grid-template-columns: 1fr;
+}
+
+/* sensible media sizing */
+.media-grid img,
+.media-col video {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 3; /* pleasant default frame */
+  object-fit: cover; /* crop instead of huge black bars */
+  max-height: clamp(220px, 55vh, 560px);
+}
+
+/* ===== 3-dot menu (bigger, reliable stacking) ===== */
+.menu-wrap {
+  position: relative;
+}
+.menu-wrap .three {
+  /* larger target */
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+}
+.menu-wrap .three:hover {
+  background: #0e1430;
+}
+
+.menu-wrap .menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 180px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: none;
+  z-index: 1500; /* above cards */
+  box-shadow: var(--elev-2);
+}
+.menu-wrap.open .menu {
+  display: block;
+}
+.menu__item {
+  padding: 10px 12px;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.menu__item:hover {
+  background: #0e1430;
+}
+
+/* Space between posts */
+.post {
+  margin-bottom: 20px; /* gap between posts */
+}
+/* Crop images in feed */
+.media-grid img {
+  max-height: 320px; /* cropped preview */
+  width: 100%;
+  object-fit: cover; /* nicely fills box */
+  border-radius: 10px;
+  cursor: pointer; /* show clickable */
+}
+/* Image modal overlay */
+#imageModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 4000;
+}
+#imageModal[hidden] {
+  display: none;
+}
+#imageModal .modal-content {
+  max-width: 40%;
+  max-height: 85%;
+  border-radius: 12px;
+  box-shadow: var(--elev-2);
+}
+#imageModal .close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 36px;
+  color: #fff;
+  cursor: pointer;
+}
+/* Make the heart icon red when liked on the feed page */
+.like-btn.active i.fa-heart {
+  color: #e0245e;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Make topbar compact on phones */
+@media (max-width: 640px) {
+  :root {
+    --nav-h: 56px;
+  }
+  .topbar {
+    padding: 6px 10px;
+  }
+  .brand {
+    font-size: 14px;
+  }
+  .topbar .actions {
+    gap: 8px;
+  }
+}
+
+/* Ensure content clears fixed topbar */
+.layout {
+  padding-top: calc(var(--nav-h) + 10px);
+}
+
+/* Hide search on narrow screens to avoid overflow */
+@media (max-width: 860px) {
+  .search {
+    display: none !important;
+  }
+}
+
+/* Create/composer button sizing (smaller on phones) */
+@media (max-width: 640px) {
+  /* Generic buttons */
+  .btn,
+  .act {
+    padding: 6px 10px;
+    min-height: 34px;
+    font-size: 13px;
+    line-height: 1;
+  }
+  /* Primary action (Create / Post) inside composer or header */
+  .composer .btn-primary,
+  .btn-primary.create,
+  .btn.create,
+  .create-btn,
+  .btn-create {
+    padding: 8px 12px;
+    min-height: 36px;
+    font-size: 14px;
+  }
+  /* Icon-only actions stay tap-friendly but compact */
+  .icon-btn,
+  .btn-ghost,
+  .menu__item {
+    min-height: 34px;
+    padding: 6px 8px;
+  }
+}
+
+/* Let composer rows wrap on small viewports */
+.composer__row {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.composer__input {
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
+/* Grid/media rules: never force horizontal scroll */
+.media-grid {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
+.media-grid.single {
+  grid-template-columns: 1fr;
+}
+.media-grid img,
+.media-col video {
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  max-height: clamp(200px, 55vh, 560px);
+  width: 100%;
+}
+
+/* Sidebar/rightbar collapse earlier */
+@media (max-width: 900px) {
+  .sidebar,
+  .rightbar {
+    display: none !important;
+  }
+  .layout,
+  .layout.collapsed {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* Small phones: tighter cards and avatars */
+@media (max-width: 480px) {
+  .card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .avatar-sm {
+    width: 36px;
+    height: 36px;
+  }
+  .actions {
+    gap: 8px;
+  }
+}
+
+/* Image viewer modal fits the viewport */
+#imageModal .modal-content {
+  max-width: min(96vw, 1000px);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+}
+#imageModal .close {
+  top: max(12px, calc(8px + env(safe-area-inset-top, 0px)));
+  right: max(12px, calc(8px + env(safe-area-inset-right, 0px)));
+  font-size: 28px;
+}
