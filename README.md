@@ -1,4 +1,4 @@
-#**MediaVerse**
+**MediaVerse**
 
 MediaVerse is a modern full-stack social media web application that brings people together through posts, profiles, and interactions. With an intuitive UI, real-time updates, and secure backend integration, it delivers the core experience of a social network in a clean and developer-friendly structure.
 
@@ -65,6 +65,7 @@ Dropdown menus, toggles, and FontAwesome icons
 **Database →** MongoDB (Mongoose ORM)
 
 **Cloud →** Cloudinary (for images, Videos)
+
 
 
 
